@@ -3,16 +3,18 @@ from typing import Callable
 
 
 def cache(func: Callable) -> Callable:
-    cash_dict = {}
+
+    cache_storage = {}
 
     @wraps(func)
     def wrapper(*args) -> Callable:
-        if args in cash_dict:
+        if args in cache_storage:
             print("Getting from cache")
-            return cash_dict[args]
+            return cache_storage[args]
         else:
             print("Calculating new result")
             result = func(*args)
-            cash_dict[args] = result
+            cache_storage[args] = result
             return result
+
     return wrapper
